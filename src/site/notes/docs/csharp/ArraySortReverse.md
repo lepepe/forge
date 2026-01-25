@@ -41,7 +41,7 @@ foreach (var pallet in pallets)
 ```
 
 **Output:**
-```
+```bash
 Original order:
 -- B14
 -- A11
@@ -102,7 +102,7 @@ foreach (var pallet in pallets)
 ```
 
 **Output:**
-```
+```bash
 Original order:
 -- A11
 -- A13
@@ -165,7 +165,7 @@ foreach (var pallet in pallets)
 ```
 
 **Output:**
-```
+```bash
 Original:
 -- B14
 -- A11
@@ -273,7 +273,7 @@ foreach (var word in words)
 ```
 
 **Output:**
-```
+```bash
 Apple
 Banana
 banana
@@ -338,7 +338,7 @@ for (int i = 0; i < 3; i++)
 ```
 
 **Output:**
-```
+```bash
 Top 3 grades:
 1. 95
 2. 92
@@ -360,7 +360,7 @@ foreach (var name in names)
 ```
 
 **Output:**
-```
+```bash
 Alphabetized roster:
 - Alice
 - Bob
@@ -384,7 +384,7 @@ foreach (var item in inputs)
 ```
 
 **Output:**
-```
+```bash
 Reversed order (LIFO):
 fourth
 third
