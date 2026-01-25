@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/casting-conversion/"}
+{"dg-publish":true,"permalink":"/docs/csharp/casting-conversion/","tags":["string-manipulation","conversion","data-types","conversions"]}
 ---
 
 # Data Type Casting and Conversion in C#

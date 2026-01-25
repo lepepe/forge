@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/exceptions-handling/","tags":["exceptions","try-catch","finally"]}
+{"dg-publish":true,"permalink":"/docs/csharp/exceptions-handling/","tags":["exceptions","try-catch","finally","error-handling"]}
 ---
 
 # Exceptions and Exception Handling in C#
