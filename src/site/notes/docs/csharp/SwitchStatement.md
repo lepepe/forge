@@ -337,7 +337,7 @@ switch (employeeLevel)
 
 - [[docs/csharp/BooleanExpressions\|Boolean Expressions]]
 - [[docs/csharp/CodeBlocksVariableScope\|Code Blocks and Variable Scope]]
-- [[docs/csharp/CSharp_Learning\|C# Learning Guide]]
+- [[docs/csharp/LearningCsharp\|C# Learning Guide]]
 - Switch Expressions (C# 8.0+)
 - Pattern Matching
 

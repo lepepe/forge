@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/array-sort-reverse/"}
+{"dg-publish":true,"permalink":"/docs/csharp/array-sort-reverse/","tags":["arrays","sorting","reverse","data-types"]}
 ---
 
 # Array Sort and Reverse in C#
@@ -436,7 +436,7 @@ Array.Sort(copy);
 
 - [[docs/csharp/ForLoop\|For Loop]]
 - [[docs/csharp/ValueReferenceTypes\|Value Types and Reference Types]]
-- [[docs/csharp/CSharp_Learning\|C# Learning Guide]]
+- [[docs/csharp/LearningCsharp\|C# Learning Guide]]
 - Array Clear, Resize, and Copy
 - LINQ OrderBy and OrderByDescending
 - List<T> Sort Methods

@@ -333,7 +333,7 @@ int result = nullableInt ?? 0;  // Use 0 if null
 
 ## Related Topics
 
-- [[docs/csharp/CSharp_Learning\|C# Learning Guide]]
+- [[docs/csharp/LearningCsharp\|C# Learning Guide]]
 - [[docs/csharp/CodeBlocksVariableScope\|Code Blocks and Variable Scope]]
 - Memory Management and Garbage Collection
 - Nullable Types

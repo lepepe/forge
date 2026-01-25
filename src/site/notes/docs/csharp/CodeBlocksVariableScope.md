@@ -266,7 +266,7 @@ Console.WriteLine(message); // Accessible here
 ## Related Topics
 
 - [[docs/csharp/BooleanExpressions\|Boolean Expressions]]
-- [[docs/csharp/CSharp_Learning\|C# Learning Guide]]
+- [[docs/csharp/LearningCsharp\|C# Learning Guide]]
 - Control Flow Statements
 - Methods and Parameters
 

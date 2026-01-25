@@ -209,7 +209,7 @@ if (age < 18 || !hasLicense)
 
 ## Related Topics
 
-- [[docs/csharp/CSharp_Learning\|C# Learning Guide]]
+- [[docs/csharp/LearningCsharp\|C# Learning Guide]]
 - Conditional Statements (if/else)
 - Logical Operators
 - Switch Expressions

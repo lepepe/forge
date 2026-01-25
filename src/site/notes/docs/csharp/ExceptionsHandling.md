@@ -911,10 +911,10 @@ if (index == -1)
 
 ## Related Topics
 
-- [[docs/csharp/CSharp_Methods_Syntax\|Methods Syntax]]
+- [[docs/csharp/MethodsSyntax\|Methods Syntax]]
 - [[docs/csharp/CSharp_Method_Parameters\|Method Parameters]]
 - [[docs/csharp/CodeBlocksVariableScope\|Code Blocks and Variable Scope]]
-- [[docs/csharp/CSharp_Learning\|C# Learning Guide]]
+- [[docs/csharp/LearningCsharp\|C# Learning Guide]]
 - Custom Exception Classes
 - Using Statement (Resource Management)
 - Debugging and Diagnostics
