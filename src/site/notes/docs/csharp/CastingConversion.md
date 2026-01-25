@@ -389,7 +389,7 @@ checked
 
 ## Related Topics
 
-- [[docs/csharp/CSharp_Value_Reference_Types\|Value Types and Reference Types]]
+- [[docs/csharp/ValueReferenceTypes\|Value Types and Reference Types]]
 - [[docs/csharp/BooleanExpressions\|Boolean Expressions]]
 - [[docs/csharp/CSharp_Learning\|C# Learning Guide]]
 - String Formatting

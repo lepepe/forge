@@ -435,7 +435,7 @@ Array.Sort(copy);
 ## Related Topics
 
 - [[docs/csharp/ForLoop\|For Loop]]
-- [[docs/csharp/CSharp_Value_Reference_Types\|Value Types and Reference Types]]
+- [[docs/csharp/ValueReferenceTypes\|Value Types and Reference Types]]
 - [[docs/csharp/CSharp_Learning\|C# Learning Guide]]
 - Array Clear, Resize, and Copy
 - LINQ OrderBy and OrderByDescending

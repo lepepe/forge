@@ -404,7 +404,7 @@ for (; i < 10; i++)
 
 - [[docs/csharp/BooleanExpressions\|Boolean Expressions]]
 - [[docs/csharp/CodeBlocksVariableScope\|Code Blocks and Variable Scope]]
-- [[docs/csharp/CSharp_Switch_Statement\|Switch Statement]]
+- [[docs/csharp/SwitchStatement\|Switch Statement]]
 - [[docs/csharp/CSharp_Learning\|C# Learning Guide]]
 - While Loop
 - Foreach Loop
