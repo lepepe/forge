@@ -912,7 +912,7 @@ if (index == -1)
 ## Related Topics
 
 - [[docs/csharp/MethodsSyntax\|Methods Syntax]]
-- [[docs/csharp/CSharp_Method_Parameters\|Method Parameters]]
+- [[docs/csharp/MethodParameters\|Method Parameters]]
 - [[docs/csharp/CodeBlocksVariableScope\|Code Blocks and Variable Scope]]
 - [[docs/csharp/LearningCsharp\|C# Learning Guide]]
 - Custom Exception Classes

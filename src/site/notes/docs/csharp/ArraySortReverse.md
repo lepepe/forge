@@ -439,14 +439,12 @@ Array.Sort(copy);
 - [[docs/csharp/LearningCsharp\|C# Learning Guide]]
 - Array Clear, Resize, and Copy
 - LINQ OrderBy and OrderByDescending
-- List<T> Sort Methods
+- List`<T>` Sort Methods
 
 ---
-
 ## Source
 
 - [Microsoft Learn: Array Sort and Reverse](https://learn.microsoft.com/en-us/training/modules/csharp-arrays-operations/2-exercise-sort-reverse)
-
 ---
 
 #csharp #programming #arrays #sorting #fundamentals #collections
