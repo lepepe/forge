@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/array-sort-reverse/","tags":["gardenEntry"]}
+{"dg-publish":true,"permalink":"/docs/csharp/array-sort-reverse/"}
 ---
 
 # Array Sort and Reverse in C#
