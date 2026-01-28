@@ -19,6 +19,7 @@ A collection of notes, code snippets, and principles related to software develop
 *   **Languages & Frameworks**
     *   [[docs/csharp/LearningCsharp\|Learning C#]]
     *   [[Python\|Python]]
+	    * [[docs/python/polars/PolarsGuide\|PolarsGuide]]
     * [[Ruby\|Ruby]]
     *   [[Web Development\|Web Development]]
 *   **Core Concepts**
