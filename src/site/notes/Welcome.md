@@ -26,6 +26,8 @@ A collection of notes, code snippets, and principles related to software develop
     *   [[Data Structures & Algorithms\|Data Structures & Algorithms]]
     *   [[Software Design Patterns\|Software Design Patterns]]
     *   [[DevOps\|DevOps]]
+- **AI**
+	- [[docs/tools/QMDGettingStarted\|QMDGettingStarted]]
 
 ### 🌲 The Great Outdoors: Adventures & Skills
 
