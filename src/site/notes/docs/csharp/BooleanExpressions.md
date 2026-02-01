@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/boolean-expressions/","tags":["operators","string-manipulation","expressions"]}
+{"dg-publish":true,"permalink":"/docs/csharp/boolean-expressions/","tags":["csharp","operators","string-manipulation","expressions"]}
 ---
 
 # Boolean Expressions in C#

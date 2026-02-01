@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/method-return-types/","tags":["types","methods","data-types","void","return"]}
+{"dg-publish":true,"permalink":"/docs/csharp/method-return-types/","tags":["csharp","types","methods","data-types","void","return"]}
 ---
 
 # Method Return Types in C#

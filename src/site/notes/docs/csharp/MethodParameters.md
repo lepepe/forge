@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/method-parameters/","tags":["methods","parameters","arguments","types","variables"]}
+{"dg-publish":true,"permalink":"/docs/csharp/method-parameters/","tags":["csharp","methods","parameters","arguments","types","variables"]}
 ---
 
 # Method Parameters in C#

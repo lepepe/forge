@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/index-of-substring/","tags":["methods","string-manipulation","substring","strings"]}
+{"dg-publish":true,"permalink":"/docs/csharp/index-of-substring/","tags":["csharp","methods","string-manipulation","substring","strings"]}
 ---
 
 # String Manipulation Methods in C#

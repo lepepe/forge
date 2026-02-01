@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/switch-statement/","tags":["switch","if-else","if","else","escape-sequences","case"]}
+{"dg-publish":true,"permalink":"/docs/csharp/switch-statement/","tags":["csharp","switch","if-else","if","else","escape-sequences","case"]}
 ---
 
 

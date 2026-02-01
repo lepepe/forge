@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/literals-variables/","tags":["variables","literals","types","integers"]}
+{"dg-publish":true,"permalink":"/docs/csharp/literals-variables/","tags":["csharp","variables","literals","types","integers"]}
 ---
 
 # Literals and Variables in C#

@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/methods-syntax/","tags":["methods","syntax","arguments"]}
+{"dg-publish":true,"permalink":"/docs/csharp/methods-syntax/","tags":["csharp","methods","syntax","arguments"]}
 ---
 
 # Methods in C#

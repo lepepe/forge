@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/learning-csharp/","tags":["introduction","syntax","data-types"]}
+{"dg-publish":true,"permalink":"/docs/csharp/learning-csharp/","tags":["csharp","introduction","syntax","data-types"]}
 ---
 
 # C# Learning Guide

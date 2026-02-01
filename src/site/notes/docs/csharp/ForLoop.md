@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/for-loop/","tags":["for-loop","arrays","loops"]}
+{"dg-publish":true,"permalink":"/docs/csharp/for-loop/","tags":["csharp","for-loop","arrays","loops"]}
 ---
 
 # For Loop in C#

@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/string-formatting/","tags":["strings","string-manipulation","formatting"]}
+{"dg-publish":true,"permalink":"/docs/csharp/string-formatting/","tags":["csharp","strings","string-manipulation","formatting"]}
 ---
 
 # String Formatting in C#

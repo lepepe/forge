@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/string-split-join/","tags":["strings","string-manipulation","join","split"]}
+{"dg-publish":true,"permalink":"/docs/csharp/string-split-join/","tags":["csharp","strings","string-manipulation","join","split"]}
 ---
 
 # String Split and Join in C#

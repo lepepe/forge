@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/code-blocks-variable-scope/","tags":["variables","code-blocks","loops","switch"]}
+{"dg-publish":true,"permalink":"/docs/csharp/code-blocks-variable-scope/","tags":["csharp","variables","code-blocks","loops","switch"]}
 ---
 
 # Code Blocks and Variable Scope in C#

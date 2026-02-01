@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/while-do-while-loops/","tags":["loops","while-loop","do-while","break","continue"]}
+{"dg-publish":true,"permalink":"/docs/csharp/while-do-while-loops/","tags":["csharp","loops","while-loop","do-while","break","continue"]}
 ---
 
 # While and Do-While Loops in C#

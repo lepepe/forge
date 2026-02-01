@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/csharp/value-reference-types/","tags":["data-types","value-types","reference-types","types"]}
+{"dg-publish":true,"permalink":"/docs/csharp/value-reference-types/","tags":["csharp","data-types","value-types","reference-types","types"]}
 ---
 
 # Value Types and Reference Types in C#
