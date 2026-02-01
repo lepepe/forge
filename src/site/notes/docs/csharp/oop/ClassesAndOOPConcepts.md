@@ -304,6 +304,7 @@ myCar.StartCar();
 ```
 
 **Aggregation vs Composition:**
+
 | Relationship | Lifetime | Example |
 |--------------|----------|---------|
 | Aggregation | Independent | Car has a Driver |
