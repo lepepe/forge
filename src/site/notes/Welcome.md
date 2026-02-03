@@ -28,6 +28,7 @@ A collection of notes, code snippets, and principles related to software develop
     *   [[DevOps\|DevOps]]
 - **AI**
 	- [[docs/tools/QMDGettingStarted\|QMDGettingStarted]]
+  - [[docs/tools/ClaudeGettingStarted\|ClaudeGettingStarted]]
 
 ### 🌲 The Great Outdoors: Adventures & Skills
 
