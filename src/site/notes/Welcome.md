@@ -4,7 +4,7 @@
 
 # Welcome to The Forge
 
-This is your personal knowledge forge, a space to hammer out ideas, shape your understanding, and build a resilient repository of skills and wisdom.
+This is my personal knowledge forge, a space to hammer out ideas, shape understanding, and build a resilient repository of skills and wisdom.
 
 ---
 
@@ -40,11 +40,3 @@ A guide to adventures and practical skills for thriving in the natural world.
     *   [[Backpacking\|Backpacking]]
 
 ---
-
-## How to Use This Vault
-
-1.  **Create New Notes:** Click on any of the uncreated links to create a new note on that topic.
-2.  **Link Your Thinking:** As you write, create links to other notes using `[[Page Name]]` to build a web of knowledge.
-3.  **Capture Fleeting Ideas:** Use a "Daily Note" or a dedicated "Inbox" to quickly jot down thoughts.
-
-Happy forging!
