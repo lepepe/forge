@@ -26,7 +26,7 @@ A collection of notes, code snippets, and principles related to software develop
     *   [[Data Structures & Algorithms\|Data Structures & Algorithms]]
     *   [[Software Design Patterns\|Software Design Patterns]]
     *   [[DevOps\|DevOps]]
-    * [[Git\|Git]]
+	    * [[docs/git/Git\|Git]]
 - **AI**
 	- [[docs/tools/QMDGettingStarted\|QMDGettingStarted]]
 	- [[docs/tools/ClaudeGettingStarted\|ClaudeGettingStarted]]
