@@ -28,6 +28,14 @@ cd ProductApi
 
 This scaffolds a new ASP.NET Core Web API project. Open it in your IDE or editor.
 
+Can also use the `--use-controllers` flag:
+```bash
+
+dotnet new webapi --use-controllers
+```
+
+This generates the traditional structure with a Controllers folder and a WeatherForecastController.cs instead of inline MapGet() calls.
+
 ---
 
 ## 3. Install NuGet Packages
