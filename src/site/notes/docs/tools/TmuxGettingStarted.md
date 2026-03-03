@@ -8,7 +8,7 @@
 
 Tmux (Terminal Multiplexer) is a tool that lets you run multiple terminal sessions inside a single window. It supports splitting panes, managing windows, and detaching/reattaching sessions -- making it essential for remote work, long-running processes, and organized terminal workflows.
 
-> **Prefix key:** All tmux shortcuts start with `Ctrl-b` (the prefix), followed by the command key.
+> **Prefix key:** All tmux shortcuts start with `Ctrl-a` (the prefix), followed by the command key.
 
 ---
 
@@ -48,13 +48,13 @@ Sessions are the top-level container in tmux. They persist even after you discon
 
 ### Keybindings Inside tmux
 
-| Shortcut | Description |
-|----------|-------------|
-| `Ctrl-b d` | Detach from current session |
-| `Ctrl-b $` | Rename current session |
-| `Ctrl-b s` | List and switch between sessions |
-| `Ctrl-b (` | Switch to previous session |
-| `Ctrl-b )` | Switch to next session |
+| Shortcut   | Description                      |
+| ---------- | -------------------------------- |
+| `Ctrl-a d` | Detach from current session      |
+| `Ctrl-a $` | Rename current session           |
+| `Ctrl-a s` | List and switch between sessions |
+| `Ctrl-a (` | Switch to previous session       |
+| `Ctrl-a )` | Switch to next session           |
 
 ---
 
@@ -62,17 +62,17 @@ Sessions are the top-level container in tmux. They persist even after you discon
 
 Windows act as tabs within a session. Each window contains one or more panes.
 
-| Shortcut | Description |
-|----------|-------------|
-| `Ctrl-b c` | Create a new window |
-| `Ctrl-b ,` | Rename current window |
-| `Ctrl-b n` | Next window |
-| `Ctrl-b p` | Previous window |
-| `Ctrl-b w` | List all windows (interactive picker) |
-| `Ctrl-b 0-9` | Jump to window by number |
-| `Ctrl-b l` | Toggle to last active window |
-| `Ctrl-b &` | Close current window (with confirmation) |
-| `Ctrl-b f` | Find window by name |
+| Shortcut     | Description                              |
+| ------------ | ---------------------------------------- |
+| `Ctrl-a c`   | Create a new window                      |
+| `Ctrl-a ,`   | Rename current window                    |
+| `Ctrl-a n`   | Next window                              |
+| `Ctrl-a p`   | Previous window                          |
+| `Ctrl-a w`   | List all windows (interactive picker)    |
+| `Ctrl-a 0-9` | Jump to window by number                 |
+| `Ctrl-a l`   | Toggle to last active window             |
+| `Ctrl-a &`   | Close current window (with confirmation) |
+| `Ctrl-a f`   | Find window by name                      |
 
 ---
 
@@ -82,42 +82,42 @@ Panes split a window into multiple terminal views.
 
 ### Creating and Closing
 
-| Shortcut | Description |
-|----------|-------------|
-| `Ctrl-b %` | Split pane vertically (left/right) |
-| `Ctrl-b "` | Split pane horizontally (top/bottom) |
-| `Ctrl-b x` | Close current pane (with confirmation) |
+| Shortcut   | Description                            |
+| ---------- | -------------------------------------- |
+| `Ctrl-a %` | Split pane vertically (left/right)     |
+| `Ctrl-a "` | Split pane horizontally (top/bottom)   |
+| `Ctrl-a x` | Close current pane (with confirmation) |
 
 ### Navigation
 
-| Shortcut | Description |
-|----------|-------------|
-| `Ctrl-b o` | Cycle to next pane |
-| `Ctrl-b ;` | Toggle to last active pane |
-| `Ctrl-b q` | Show pane numbers (press number to jump) |
-| `Ctrl-b arrows` | Move between panes directionally |
+| Shortcut        | Description                              |
+| --------------- | ---------------------------------------- |
+| `Ctrl-a o`      | Cycle to next pane                       |
+| `Ctrl-a ;`      | Toggle to last active pane               |
+| `Ctrl-a q`      | Show pane numbers (press number to jump) |
+| `Ctrl-a arrows` | Move between panes directionally         |
 
 ### Resizing
 
-| Shortcut | Description |
-|----------|-------------|
-| `Ctrl-b Ctrl-arrows` | Resize pane in arrow direction (1 cell) |
-| `Ctrl-b Alt-arrows` | Resize pane in arrow direction (5 cells) |
+| Shortcut             | Description                              |
+| -------------------- | ---------------------------------------- |
+| `Ctrl-a Ctrl-arrows` | Resize pane in arrow direction (1 cell)  |
+| `Ctrl-a Alt-arrows`  | Resize pane in arrow direction (5 cells) |
 
 ### Layout
 
-| Shortcut | Description |
-|----------|-------------|
-| `Ctrl-b Space` | Cycle through preset layouts |
-| `Ctrl-b Alt-1` | Even horizontal layout |
-| `Ctrl-b Alt-2` | Even vertical layout |
-| `Ctrl-b Alt-3` | Main horizontal layout |
-| `Ctrl-b Alt-4` | Main vertical layout |
-| `Ctrl-b Alt-5` | Tiled layout |
-| `Ctrl-b {` | Swap pane with previous |
-| `Ctrl-b }` | Swap pane with next |
-| `Ctrl-b z` | Toggle pane zoom (fullscreen) |
-| `Ctrl-b !` | Convert pane into a new window |
+| Shortcut       | Description                    |
+| -------------- | ------------------------------ |
+| `Ctrl-a Space` | Cycle through preset layouts   |
+| `Ctrl-a Alt-1` | Even horizontal layout         |
+| `Ctrl-a Alt-2` | Even vertical layout           |
+| `Ctrl-a Alt-3` | Main horizontal layout         |
+| `Ctrl-a Alt-4` | Main vertical layout           |
+| `Ctrl-a Alt-5` | Tiled layout                   |
+| `Ctrl-a {`     | Swap pane with previous        |
+| `Ctrl-a }`     | Swap pane with next            |
+| `Ctrl-a z`     | Toggle pane zoom (fullscreen)  |
+| `Ctrl-a !`     | Convert pane into a new window |
 
 ---
 
@@ -125,18 +125,18 @@ Panes split a window into multiple terminal views.
 
 Copy mode allows scrolling through output and copying text.
 
-| Shortcut | Description |
-|----------|-------------|
-| `Ctrl-b [` | Enter copy mode |
-| `q` | Exit copy mode |
-| `arrows` / `PgUp` / `PgDn` | Navigate in copy mode |
-| `Space` | Start selection (in copy mode) |
-| `Enter` | Copy selection and exit copy mode |
-| `Ctrl-b ]` | Paste copied text |
-| `/` | Search forward (in copy mode) |
-| `?` | Search backward (in copy mode) |
-| `n` / `N` | Next / previous search match |
-| `g` / `G` | Jump to top / bottom |
+| Shortcut                   | Description                       |
+| -------------------------- | --------------------------------- |
+| `Ctrl-a [`                 | Enter copy mode                   |
+| `q`                        | Exit copy mode                    |
+| `arrows` / `PgUp` / `PgDn` | Navigate in copy mode             |
+| `Space`                    | Start selection (in copy mode)    |
+| `Enter`                    | Copy selection and exit copy mode |
+| `Ctrl-a ]`                 | Paste copied text                 |
+| `/`                        | Search forward (in copy mode)     |
+| `?`                        | Search backward (in copy mode)    |
+| `n` / `N`                  | Next / previous search match      |
+| `g` / `G`                  | Jump to top / bottom              |
 
 > **Tip:** If you set `set-window-option -g mode-keys vi` in your config, copy mode uses vim-style keys (`h/j/k/l`, `v` for selection, `y` to yank).
 
@@ -144,15 +144,15 @@ Copy mode allows scrolling through output and copying text.
 
 ## Command Mode
 
-| Shortcut | Description |
-|----------|-------------|
-| `Ctrl-b :` | Open the tmux command prompt |
-| `Ctrl-b ?` | List all key bindings |
+| Shortcut   | Description                  |
+| ---------- | ---------------------------- |
+| `Ctrl-a :` | Open the tmux command prompt |
+| `Ctrl-a ?` | List all key bindings        |
 
 ### Useful Command Mode Examples
 
 ```bash
-# From the tmux command prompt (Ctrl-b :)
+# From the tmux command prompt (Ctrl-a :)
 source-file ~/.tmux.conf       # Reload configuration
 list-keys                      # Show all bindings
 set -g mouse on                # Enable mouse support (current session)
@@ -174,7 +174,7 @@ Tmux is configured via `~/.tmux.conf`. Changes apply on new sessions or after re
 tmux source-file ~/.tmux.conf
 
 # From inside tmux
-Ctrl-b :source-file ~/.tmux.conf
+Ctrl-a :source-file ~/.tmux.conf
 ```
 
 ### Starter Configuration
@@ -231,7 +231,7 @@ set -ag terminal-overrides ",xterm-256color:RGB"
 tmux new -s build
 npm run build       # or any long-running command
 
-# Detach with Ctrl-b d
+# Detach with Ctrl-a d
 # Later, reattach from anywhere
 tmux attach -t build
 ```
@@ -240,7 +240,7 @@ tmux attach -t build
 
 ```bash
 tmux new -s dev
-# Ctrl-b % to split vertically
+# Ctrl-a % to split vertically
 # Left pane: vim/neovim
 # Right pane: tests or logs
 ```
@@ -250,31 +250,31 @@ tmux new -s dev
 ```bash
 tmux new -s servers
 # Create windows for each server
-Ctrl-b c            # New window for server 2
-Ctrl-b c            # New window for server 3
-Ctrl-b ,            # Rename each window
-Ctrl-b w            # Quick switch between them
+Ctrl-a c            # New window for server 2
+Ctrl-a c            # New window for server 3
+Ctrl-a ,            # Rename each window
+Ctrl-a w            # Quick switch between them
 ```
 
 ---
 
 ## Quick Reference
 
-| Task | Command / Shortcut |
-|------|-------------------|
-| New session | `tmux new -s name` |
-| Attach | `tmux attach -t name` |
-| Detach | `Ctrl-b d` |
-| List sessions | `tmux ls` |
-| New window | `Ctrl-b c` |
-| Split vertical | `Ctrl-b %` |
-| Split horizontal | `Ctrl-b "` |
-| Navigate panes | `Ctrl-b arrows` |
-| Zoom pane | `Ctrl-b z` |
-| Copy mode | `Ctrl-b [` |
-| Paste | `Ctrl-b ]` |
-| Kill pane | `Ctrl-b x` |
-| Reload config | `Ctrl-b :source-file ~/.tmux.conf` |
+| Task             | Command / Shortcut                 |
+| ---------------- | ---------------------------------- |
+| New session      | `tmux new -s name`                 |
+| Attach           | `tmux attach -t name`              |
+| Detach           | `Ctrl-a d`                         |
+| List sessions    | `tmux ls`                          |
+| New window       | `Ctrl-a c`                         |
+| Split vertical   | `Ctrl-a %`                         |
+| Split horizontal | `Ctrl-a "`                         |
+| Navigate panes   | `Ctrl-a arrows`                    |
+| Zoom pane        | `Ctrl-a z`                         |
+| Copy mode        | `Ctrl-a [`                         |
+| Paste            | `Ctrl-a ]`                         |
+| Kill pane        | `Ctrl-a x`                         |
+| Reload config    | `Ctrl-a :source-file ~/.tmux.conf` |
 
 ---
 
