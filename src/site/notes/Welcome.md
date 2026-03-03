@@ -20,6 +20,7 @@ A collection of notes, code snippets, and principles related to software develop
     *   [[docs/csharp/LearningCsharp\|Learning C#]]
     *   [[Python\|Python]]
 	    * [[docs/python/polars/PolarsGuide\|PolarsGuide]]
+    *   [[docs/tsql/TSQLGuide\|T-SQL / SQL Server]]
     * [[Ruby\|Ruby]]
     *   [[Web Development\|Web Development]]
 *   **Core Concepts**
