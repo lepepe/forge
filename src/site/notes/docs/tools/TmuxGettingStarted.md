@@ -82,11 +82,11 @@ Panes split a window into multiple terminal views.
 
 ### Creating and Closing
 
-| Shortcut   | Description                            |
-| ---------- | -------------------------------------- |
-| `Ctrl-a %` | Split pane vertically (left/right)     |
-| `Ctrl-a "` | Split pane horizontally (top/bottom)   |
-| `Ctrl-a x` | Close current pane (with confirmation) |
+| Shortcut    | Description                            |
+| ----------- | -------------------------------------- |
+| `Ctrl-a \|` | Split pane vertically (left/right)     |
+| `Ctrl-a -`  | Split pane horizontally (top/bottom)   |
+| `Ctrl-a x`  | Close current pane (with confirmation) |
 
 ### Navigation
 
