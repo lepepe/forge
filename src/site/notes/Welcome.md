@@ -17,7 +17,7 @@ This vault is primarily divided into two domains: the digital and the natural.
 A collection of notes, code snippets, and principles related to software development.
 
 *   **Languages & Frameworks**
-    *   [[docs/csharp/LearningCsharp\|Learning C#]]
+    *   [[docs/csharp/Learning Guide\|C# Learning Guide]]
     *   [[Python\|Python]]
 	    * [[docs/python/polars/PolarsGuide\|PolarsGuide]]
     *   [[docs/tsql/TSQLGuide\|T-SQL / SQL Server]]
@@ -25,7 +25,7 @@ A collection of notes, code snippets, and principles related to software develop
     *   [[Web Development\|Web Development]]
 *   **Core Concepts**
     *   [[Data Structures & Algorithms\|Data Structures & Algorithms]]
-    *   [[Software Design Patterns\|Software Design Patterns]]
+    *   [[docs/csharp/design-patterns/Design Patterns\|Software Design Patterns]]
     *   [[DevOps\|DevOps]]
 	    * [[docs/git/Git\|Git]]
 - **AI**
