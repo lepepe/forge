@@ -2,7 +2,7 @@
 {"dg-publish":true,"permalink":"/docs/csharp/collections/collections/","tags":["csharp","collections","dotnet","data-structures"]}
 ---
 
-# Collections in C#
+# Collections
 
 ## Overview
 
