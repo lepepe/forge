@@ -14,9 +14,9 @@ A **collection** is anything that holds multiple items — a list of orders, a s
 
 Most collection types in .NET build on each other through interfaces, each one adding a bit more capability.
 
-### `IEnumerable<T>`
+### IEnumerable
 
-The most basic contract: "you can loop over me with `foreach`." Nothing else is guaranteed — no adding, no removing, no counting.
+The `IEnumerable<T>` interface is the most basic contract: "you can loop over me with `foreach`." Nothing else is guaranteed — no adding, no removing, no counting.
 
 ```csharp
 IEnumerable<int> productIds = new List<int> { 1, 2, 3 };
@@ -31,9 +31,9 @@ Arrays, `List<T>`, `Stack<T>`, even `string` (a collection of `char`) all implem
 
 > **Note:** typing a variable as `IEnumerable<T>` only *hides* the add/remove methods — it doesn't make the underlying collection truly unchangeable. If the real object behind it is a `List<T>`, casting back to `List<T>` lets you mutate it. For a genuine guarantee of immutability, use the `System.Collections.Immutable` namespace (e.g. `ImmutableList<T>`).
 
-### `ICollection<T>`
+### ICollection
 
-Adds `.Add()`, `.Remove()`, and a fast `.Count` property on top of `IEnumerable<T>`.
+The `ICollection<T>` interface adds `.Add()`, `.Remove()`, and a fast `.Count` property on top of `IEnumerable<T>`.
 
 ```csharp
 ICollection<int> ids = new List<int> { 1, 2, 3 };
@@ -43,9 +43,9 @@ ids.Remove(2);   // [1, 3, 4]
 int count = ids.Count; // 3 - no need to loop to get this
 ```
 
-### `IList<T>`
+### IList
 
-Adds index-based access on top of `ICollection<T>`: read/write by position, insert at a position, remove at a position.
+The `IList<T>` interface adds index-based access on top of `ICollection<T>`: read/write by position, insert at a position, remove at a position.
 
 ```csharp
 IList<int> ids = new List<int> { 1, 2, 3 };
@@ -56,9 +56,9 @@ ids.Insert(1, 99);         // [10, 99, 2, 3] - insert at a specific position
 ids.RemoveAt(0);           // Remove by position, not by value
 ```
 
-### `IReadOnlyList<T>`
+### IReadOnlyList
 
-Same index-based reading as `IList<T>`, but with no way to modify the collection at all — no `Add`, `Remove`, `Insert`, or index assignment.
+The `IReadOnlyList<T>` interface offers the same index-based reading as `IList<T>`, but with no way to modify the collection at all — no `Add`, `Remove`, `Insert`, or index assignment.
 
 ```csharp
 IReadOnlyList<int> ids = new List<int> { 1, 2, 3 };
@@ -83,7 +83,7 @@ This is a great return type when a method hands back an ordered result the calle
 
 ---
 
-## `List<T>`
+## List
 
 `List<T>` is the concrete class you'll reach for most. It implements every interface above and adds extra convenience methods on top.
 
@@ -237,7 +237,7 @@ List<Order> results = pending.ToList();
 
 ---
 
-## `HashSet<T>`
+## HashSet
 
 A `HashSet<T>` holds only **unique** values — adding the same value twice is a silent no-op.
 
@@ -267,7 +267,7 @@ public bool IsRegistered(int id) => _registeredIds.Contains(id);
 
 Under the hood, a `HashSet<T>` uses each item's `GetHashCode()` to jump straight to where it should live, then `Equals()` to confirm a match — that combination is what makes lookups so fast. If you ever use a custom class as a set element (or a dictionary key), make sure `GetHashCode()` is implemented consistently with `Equals()`, or you'll get incorrect behavior or lose the performance benefit.
 
-## `Queue<T>` and `Stack<T>`
+## Queue and Stack
 
 Two collections defined entirely by *the order you get items back out*.
 
@@ -295,9 +295,9 @@ Console.WriteLine(stack.Pop()); // 3 - the last one in
 Console.WriteLine(stack.Pop()); // 2
 ```
 
-## `Dictionary<TKey, TValue>`
+## Dictionary
 
-A collection of key-value pairs where each key is unique and maps to exactly one value. Like `HashSet<T>`, it uses hashing internally, so lookups by key are close to O(1).
+`Dictionary<TKey, TValue>` is a collection of key-value pairs where each key is unique and maps to exactly one value. Like `HashSet<T>`, it uses hashing internally, so lookups by key are close to O(1).
 
 ```csharp
 var productNames = new Dictionary<int, string>();
