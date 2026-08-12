@@ -335,7 +335,7 @@ qmd embed
 ## Related Topics
 
 - [[docs/python/polars/PolarsGuide\|Polars Guide]]
-- [[docs/csharp/LearningCsharp\|C# Learning Guide]]
+- [[docs/csharp/Learning Guide\|C# Learning Guide]]
 
 ---
 

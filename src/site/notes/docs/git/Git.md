@@ -39,5 +39,5 @@ Git is a distributed version control system that tracks changes in your code. It
 
 ## Related
 
-- [[docs/csharp/LearningCsharp\|Learning C#]]
+- [[docs/csharp/Learning Guide\|Learning C#]]
 - [[DevOps\|DevOps]]
