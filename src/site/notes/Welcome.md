@@ -30,7 +30,7 @@ A collection of notes, code snippets, and principles related to software develop
 	    * [[docs/git/Git\|Git]]
 - **AI**
 	- [[docs/tools/QMDGettingStarted\|QMDGettingStarted]]
-	- [[docs/tools/ClaudeGettingStarted\|ClaudeGettingStarted]]
+	- [[docs/tools/ai/Claude Code Getting Started\|Claude Code Getting Started]]
 
 ### 🌲 The Great Outdoors: Adventures & Skills
 
