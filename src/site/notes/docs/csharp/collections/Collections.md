@@ -29,6 +29,7 @@ foreach (var id in productIds)
 
 Arrays, `List<T>`, `Stack<T>`, even `string` (a collection of `char`) all implement `IEnumerable<T>`.
 
+> [!note]
 > **Note:** typing a variable as `IEnumerable<T>` only *hides* the add/remove methods — it doesn't make the underlying collection truly unchangeable. If the real object behind it is a `List<T>`, casting back to `List<T>` lets you mutate it. For a genuine guarantee of immutability, use the `System.Collections.Immutable` namespace (e.g. `ImmutableList<T>`).
 
 ### ICollection
@@ -70,6 +71,7 @@ int count = ids.Count;  // OK
 
 This is a great return type when a method hands back an ordered result the caller shouldn't modify — it signals intent even though (like `IEnumerable<T>`) it can technically be bypassed by casting back to the concrete type.
 
+> [!info]
 > **Reminder:** even a truly read-only *collection* doesn't make the *objects inside it* read-only. `IReadOnlyList<Order>` stops you from adding or removing orders, but nothing stops `orders[0].Status = "Cancelled"` if `Order` is a mutable class.
 
 ### The ladder at a glance
@@ -182,6 +184,7 @@ foreach (var order in lazyOrders)
 }
 ```
 
+> [!warning]
 > **Careful:** deferred execution depends on *how* a method is written, not on the `IEnumerable<T>` type itself. A method that returns `new List<int> { 1, 2, 3 }` is fully executed immediately, even though the variable holding it is typed `IEnumerable<int>`. Only `yield` (or LINQ operators, which use `yield` internally) actually defers.
 
 ### What forces immediate execution
