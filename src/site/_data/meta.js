@@ -63,6 +63,7 @@ module.exports = async (data) => {
 
   let timestampSettings = {
     timestampFormat: process.env.TIMESTAMP_FORMAT || "MMM dd, yyyy h:mm a",
+    dateFormat: process.env.DATE_FORMAT || "MMM dd, yyyy",
     showCreated: process.env.SHOW_CREATED_TIMESTAMP == "true",
     showUpdated: process.env.SHOW_UPDATED_TIMESTAMP == "true",
   };
@@ -72,9 +73,13 @@ module.exports = async (data) => {
     noBacklinksMessage: process.env.UI_NO_BACKLINKS_MESSAGE || "No other pages mentions this page",
     searchButtonText: process.env.UI_SEARCH_BUTTON_TEXT || "Search",
     searchPlaceholder: process.env.UI_SEARCH_PLACEHOLDER || "Start typing...",
-    searchEnterHint: process.env.UI_SEARCH_ENTER_HINT || "Enter to select",
+    searchNotStarted: process.env.UI_SEARCH_NOT_STARTED_TEXT || "Enter your search text in the box above",
+    searchEnterHotkey: process.env.UI_SEARCH_ENTER_HOTKEY || "Enter",
+    searchEnterHint: process.env.UI_SEARCH_ENTER_HINT || "to select",
+    searchNavigateHotkey: process.env.UI_SEARCH_NAVIGATE_HOTKEY || "⇅",
     searchNavigateHint: process.env.UI_SEARCH_NAVIGATE_HINT || "to navigate",
-    searchCloseHint: process.env.UI_SEARCH_CLOSE_HINT || "ESC to close",
+    searchCloseHotkey: process.env.UI_SEARCH_CLOSE_HOTKEY || "ESC",
+    searchCloseHint: process.env.UI_SEARCH_CLOSE_HINT || "to close",
     searchNoResults: process.env.UI_SEARCH_NO_RESULTS || "No results for",
     searchPreviewPlaceholder: process.env.UI_SEARCH_PREVIEW_PLACEHOLDER || "Select a result to preview",
     canvasDragHint: process.env.UI_CANVAS_DRAG_HINT || "Drag to pan",
