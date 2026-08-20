@@ -202,7 +202,7 @@ ORDER BY SchemaName, TableName, TriggerName;
 
 ## Related Topics
 
-- [[docs/tsql/TSQLGuide\|T-SQL Guide]]
+- [[docs/tsql/T-SQL Guide\|T-SQL Guide]]
 - [[docs/tsql/snippets/ForeignKeys\|Foreign Keys & Indexes]]
 - [[docs/tsql/snippets/Permissions\|Permissions]]
 - [[docs/tsql/snippets/StoredProcedures\|Stored Procedures]]

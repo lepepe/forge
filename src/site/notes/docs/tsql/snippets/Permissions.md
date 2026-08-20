@@ -195,7 +195,7 @@ GRANT IMPERSONATE ON USER::[testUser] TO [yourAdminUser];
 
 ## Related Topics
 
-- [[docs/tsql/TSQLGuide\|T-SQL Guide]]
+- [[docs/tsql/T-SQL Guide\|T-SQL Guide]]
 - [[docs/tsql/snippets/SysTables\|Sys Tables & Schema Queries]]
 
 ---

@@ -177,8 +177,8 @@ ADD CONSTRAINT UQ_Users_Username_Email
 
 ## Related Topics
 
-- [[docs/tsql/TSQLGuide\|T-SQL Guide]]
-- [[docs/tsql/Checksum\|Checksum & Data Integrity]]
+- [[docs/tsql/T-SQL Guide\|T-SQL Guide]]
+- [[docs/tsql/database-objects/Checksum\|Checksum & Data Integrity]]
 - [[docs/tsql/snippets/SysTables\|Sys Tables & Schema Queries]]
 
 ---

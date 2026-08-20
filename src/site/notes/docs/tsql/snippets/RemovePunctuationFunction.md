@@ -140,8 +140,8 @@ DROP FUNCTION IF EXISTS dbo.fn_RemovePunctuation;
 
 ## Related Topics
 
-- [[docs/tsql/TSQLGuide\|T-SQL Guide]]
-- [[docs/tsql/DynamicSQL\|Dynamic SQL]]
+- [[docs/tsql/T-SQL Guide\|T-SQL Guide]]
+- [[docs/tsql/database-objects/Dynamic SQL\|Dynamic SQL]]
 - [[docs/tsql/snippets/UpdateInBatches\|Update Records in Batches]]
 
 ---

@@ -146,8 +146,8 @@ ORDER BY i.is_primary_key DESC, i.is_unique DESC, i.name;
 
 ## Related Topics
 
-- [[docs/tsql/TSQLGuide\|T-SQL Guide]]
-- [[docs/tsql/Dependencies\|Object Dependencies]]
+- [[docs/tsql/T-SQL Guide\|T-SQL Guide]]
+- [[docs/tsql/database-objects/Dependencies\|Object Dependencies]]
 - [[docs/tsql/snippets/SysTables\|Sys Tables & Schema Queries]]
 
 ---

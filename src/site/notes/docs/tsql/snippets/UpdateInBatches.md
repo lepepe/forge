@@ -167,10 +167,10 @@ PRINT 'Purge complete. Total: ' + CAST(@TotalDeleted AS NVARCHAR);
 
 ## Related Topics
 
-- [[docs/tsql/TSQLGuide\|T-SQL Guide]]
-- [[docs/tsql/TransactionLogs\|Transaction Logs & Massive Deletes]]
-- [[docs/tsql/Transactions\|Transactions]]
-- [[docs/tsql/TempDB\|TempDB]]
+- [[docs/tsql/T-SQL Guide\|T-SQL Guide]]
+- [[docs/tsql/storage/Transaction Logs\|Transaction Logs & Massive Deletes]]
+- [[docs/tsql/foundations/Transactions\|Transactions]]
+- [[docs/tsql/storage/TempDB\|TempDB]]
 
 ---
 

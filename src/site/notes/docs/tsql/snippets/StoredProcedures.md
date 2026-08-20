@@ -136,9 +136,9 @@ ORDER BY DaysSinceLastRun DESC;
 
 ## Related Topics
 
-- [[docs/tsql/TSQLGuide\|T-SQL Guide]]
-- [[docs/tsql/Dependencies\|Object Dependencies]]
-- [[docs/tsql/DynamicSQL\|Dynamic SQL]]
+- [[docs/tsql/T-SQL Guide\|T-SQL Guide]]
+- [[docs/tsql/database-objects/Dependencies\|Object Dependencies]]
+- [[docs/tsql/database-objects/Dynamic SQL\|Dynamic SQL]]
 - [[docs/tsql/snippets/SysTables\|Sys Tables & Schema Queries]]
 
 ---

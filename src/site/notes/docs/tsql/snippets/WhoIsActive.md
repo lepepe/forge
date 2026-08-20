@@ -135,9 +135,9 @@ EXEC sp_WhoIsActive
 
 ## Related Topics
 
-- [[docs/tsql/TSQLGuide\|T-SQL Guide]]
-- [[docs/tsql/ExecutionPlans\|Execution Plans]]
-- [[docs/tsql/Transactions\|Transactions]]
+- [[docs/tsql/T-SQL Guide\|T-SQL Guide]]
+- [[docs/tsql/performance/Execution Plans\|Execution Plans]]
+- [[docs/tsql/foundations/Transactions\|Transactions]]
 
 ---
 

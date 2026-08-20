@@ -153,7 +153,7 @@ WHERE TableName = 'Inventory_ItemPricing';
 
 ## Related Topics
 
-- [[docs/tsql/TSQLGuide\|T-SQL Guide]]
+- [[docs/tsql/T-SQL Guide\|T-SQL Guide]]
 - [[docs/tsql/snippets/UpdateInBatches\|Update Records in Batches]]
 
 ---
