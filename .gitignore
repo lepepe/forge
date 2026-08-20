@@ -11,4 +11,3 @@ src/site/styles/_theme.*.css
 .cache
 _site/
 **/.DS_Store
-.env*

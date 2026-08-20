@@ -621,14 +621,6 @@ module.exports = function (eleventyConfig) {
     return JSON.stringify(variable) || '""';
   });
 
-  eleventyConfig.addFilter("publicNotes", function (collection) {
-    return (collection || []).filter((note) => !note.data.protected);
-  });
-
-  eleventyConfig.addFilter("protectedNotes", function (collection) {
-    return (collection || []).filter((note) => note.data.protected);
-  });
-
   eleventyConfig.addFilter("validJson", function (variable) {
     if (Array.isArray(variable)) {
       return variable.map((x) => x.replaceAll("\\", "\\\\")).join(",");
