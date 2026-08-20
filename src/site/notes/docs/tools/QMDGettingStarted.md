@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"tags":["qmd","search","markdown","obsidian","ai"],"protected":"True","permalink":"/docs/tools/qmd-getting-started/","dgPassFrontmatter":true}
+{"dg-publish":true,"permalink":"/docs/tools/qmd-getting-started/","tags":["qmd","search","markdown","obsidian","ai"]}
 ---
 
 # QMD Getting Started Guide
@@ -66,7 +66,7 @@ qmd embed -f
 ### Three Search Modes
 
 | Command | Type | Best For |
-|---------|------|----------|
+| --------- | ------ | ---------- |
 | `qmd search` | BM25 full-text | Exact keyword matches |
 | `qmd vsearch` | Vector semantic | Conceptual/similar meaning |
 | `qmd query` | Hybrid + reranking | Best overall results |
@@ -107,7 +107,7 @@ qmd query --min-score 0.3 "API design patterns"
 ### Available Formats
 
 | Flag | Format | Use Case |
-|------|--------|----------|
+| ------ | -------- | ---------- |
 | (default) | Colorized CLI | Interactive terminal use |
 | `--md` | Markdown | Copy to notes |
 | `--json` | JSON | Programmatic processing |
@@ -135,7 +135,7 @@ qmd search --files "polars join"
 Search results include a relevance score:
 
 | Score Range | Relevance | Color |
-|-------------|-----------|-------|
+| ------------- | ----------- | ------- |
 | 0.8 - 1.0 | Highly relevant | Green |
 | 0.5 - 0.8 | Moderately relevant | Green |
 | 0.4 - 0.5 | Somewhat relevant | Yellow |
@@ -249,7 +249,7 @@ Add to `~/.claude/settings.json`:
 ### Available MCP Tools
 
 | Tool | Description |
-|------|-------------|
+| ------ | ------------- |
 | `qmd_search` | Fast BM25 keyword search |
 | `qmd_vsearch` | Semantic vector search |
 | `qmd_query` | Hybrid search with reranking |
@@ -271,7 +271,7 @@ Add to `~/.claude/settings.json`:
 ### AI Models Used
 
 | Model | Purpose | Size |
-|-------|---------|------|
+| ------- | --------- | ------ |
 | `embedding-gemma-300M-Q8_0` | Vector embeddings | ~300MB |
 | `qwen3-reranker-0.6b-q8_0` | Result re-ranking | ~640MB |
 | `Qwen3-1.7B-Q8_0` | Query expansion | ~2.2GB |
@@ -309,7 +309,7 @@ qmd embed
 ### Common Commands
 
 | Task | Command |
-|------|---------|
+| ------ | --------- |
 | Search (best) | `qmd query "search terms"` |
 | Search (keywords) | `qmd search "exact keywords"` |
 | Search (semantic) | `qmd vsearch "concept or idea"` |
@@ -338,6 +338,7 @@ qmd embed
 - [[docs/csharp/Learning Guide\|C# Learning Guide]]
 
 ---
+
 ## Sources
 
 - [QMD GitHub Repository](https://github.com/tobi/qmd)
@@ -345,4 +346,4 @@ qmd embed
 
 ---
 
-#qmd #search #markdown #tools #obsidian #mcp
+# qmd #search #markdown #tools #obsidian #mcp

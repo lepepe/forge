@@ -284,7 +284,6 @@ Ctrl-a w            # Quick switch between them
 - [[docs/tools/QMDGettingStarted\|QMD Getting Started]]
 
 ---
-
 ## Sources
 
 - [Tmux GitHub Repository](https://github.com/tmux/tmux)
