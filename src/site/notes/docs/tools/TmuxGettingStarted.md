@@ -280,7 +280,7 @@ Ctrl-a w            # Quick switch between them
 
 ## Related Topics
 
-- [[docs/tools/ClaudeGettingStarted\|Claude Code Getting Started]]
+- [[docs/tools/ai/Claude Code Getting Started\|Claude Code Getting Started]]
 - [[docs/tools/QMDGettingStarted\|QMD Getting Started]]
 
 ---
