@@ -291,4 +291,4 @@ Ctrl-a w            # Quick switch between them
 
 ---
 
-# tmux #terminal #multiplexer #tools
+#tmux #terminal #multiplexer #tools
