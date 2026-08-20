@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/docs/tools/qmd-getting-started/","tags":["qmd","search","markdown","obsidian","ai"]}
+{"dg-publish":true,"tags":["qmd","search","markdown","obsidian","ai"],"protected":"True","permalink":"/docs/tools/qmd-getting-started/","dgPassFrontmatter":true}
 ---
 
 # QMD Getting Started Guide
