@@ -1,0 +1,5 @@
+---
+permalink: /protected-paths.json
+eleventyExcludeFromCollections: true
+---
+[{% for post in collections.note | protectedNotes %}"{{ post.url }}"{% if not loop.last %},{% endif %}{% endfor %}]

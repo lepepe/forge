@@ -49,7 +49,7 @@ async function getGraph(data) {
   let homeAlias = "/";
 
   // Process notes sequentially to handle async reads
-  const notes = data.collections.note || [];
+  const notes = (data.collections.note || []).filter((v) => !v.data.protected);
   for (let idx = 0; idx < notes.length; idx++) {
     const v = notes[idx];
     let fpath = v.filePathStem.replace("/notes/", "");

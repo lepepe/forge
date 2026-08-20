@@ -17,6 +17,10 @@ module.exports = {
       }
       return data.permalink || undefined;
     },
+    protected: (data) =>
+      Boolean(
+        data["dg-note-properties"] && data["dg-note-properties"].protected
+      ),
     settings: (data) => {
       const noteSettings = {};
       allSettings.forEach((setting) => {
