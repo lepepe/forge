@@ -37,7 +37,7 @@ Sessions are the top-level container in tmux. They persist even after you discon
 ### Commands from the Shell
 
 | Command | Description |
-|---------|-------------|
+| --------- | ------------- |
 | `tmux` | Start a new unnamed session |
 | `tmux new -s name` | Start a new named session |
 | `tmux ls` | List all sessions |
@@ -292,4 +292,4 @@ Ctrl-a w            # Quick switch between them
 
 ---
 
-#tmux #terminal #multiplexer #tools
+# tmux #terminal #multiplexer #tools

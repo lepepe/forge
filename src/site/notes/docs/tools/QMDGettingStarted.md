@@ -338,7 +338,6 @@ qmd embed
 - [[docs/csharp/Learning Guide\|C# Learning Guide]]
 
 ---
-
 ## Sources
 
 - [QMD GitHub Repository](https://github.com/tobi/qmd)
