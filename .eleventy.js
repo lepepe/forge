@@ -2,7 +2,27 @@ const slugify = require("@sindresorhus/slugify");
 const markdownIt = require("markdown-it");
 const fs = require("fs");
 const matter = require("gray-matter");
+// Obsidian writes [[Page\|Alias]] in frontmatter, but \| is an invalid YAML
+// escape sequence. This custom engine strips \| before parsing. Shared between
+// Eleventy's own frontmatter parser and the manual matter() call in
+// getAnchorAttributes so that wikilink resolution can read the permalink.
+const jsYamlForMatter = require(require.resolve("js-yaml", { paths: [require.resolve("gray-matter")] }));
+const matterOptions = {
+  engines: {
+    yaml: {
+      parse: (str) => jsYamlForMatter.load(str.replace(/\\\|/g, "|")),
+      stringify: (obj) => jsYamlForMatter.dump(obj),
+    },
+  },
+};
 const faviconsPlugin = require("eleventy-plugin-gen-favicons");
+const normalizeFavicon = require("./src/site/normalize-favicon.js");
+const { convertMdHrefs } = require("./src/helpers/linkUtils");
+const nodePath = require("path");
+
+const FAVICON_SOURCE = "./src/site/favicon.svg";
+const FAVICON_NORMALIZED = "./.cache/favicon.normalized.svg";
+normalizeFavicon(FAVICON_SOURCE, FAVICON_NORMALIZED);
 const tocPlugin = require("eleventy-plugin-nesting-toc");
 const { parse } = require("node-html-parser");
 const htmlMinifier = require("html-minifier-terser");
@@ -13,9 +33,26 @@ const {
   userMarkdownSetup,
   userEleventySetup,
 } = require("./src/helpers/userSetup");
+const { basesPlugin } = require("./src/helpers/basesPlugin");
 
 const Image = require("@11ty/eleventy-img");
-function transformImage(src, cls, alt, sizes, widths = ["500", "700", "auto"]) {
+const { isDecodableImage } = require("./src/helpers/imageFormat.js");
+
+// Build containers have few CPUs and little memory; the default queue
+// concurrency of 10 holds ~10 decoded images in memory at once without
+// finishing any faster. Sharp already parallelizes within each job.
+Image.concurrency = 2;
+
+// Image generation is started fire-and-forget during transforms (the markup
+// only needs statsSync), but every pending job is awaited in the
+// eleventy.after hook below so the build doesn't linger — or get killed —
+// doing invisible work after Eleventy reports completion.
+const pendingImageJobs = [];
+
+// Note: fillPictureSourceSets only references the first two widths; the
+// full-size original is served via the <img src> fallback, so a full
+// resolution "auto" rendition would never be referenced by the markup.
+function transformImage(src, cls, alt, sizes, widths = ["500", "700"]) {
   let options = {
     widths: widths,
     formats: ["webp", "jpeg"],
@@ -23,14 +60,19 @@ function transformImage(src, cls, alt, sizes, widths = ["500", "700", "auto"]) {
     urlPath: "/img/optimized",
   };
 
-  // generate images, while this is async we don’t wait
-  Image(src, options);
+  // A rejection here (e.g. a corrupt file) must not become an unhandled
+  // rejection, which would fail the whole build.
+  pendingImageJobs.push(
+    Image(src, options).catch((err) => {
+      console.warn(`[image] Skipping optimization of ${src}: ${err.message}`);
+    })
+  );
   let metadata = Image.statsSync(src, options);
   return metadata;
 }
 
 function getAnchorLink(filePath, linkTitle) {
-  const {attributes, innerHTML} = getAnchorAttributes(filePath, linkTitle);
+  const { attributes, innerHTML } = getAnchorAttributes(filePath, linkTitle);
   return `<a ${Object.keys(attributes).map(key => `${key}="${attributes[key]}"`).join(" ")}>${innerHTML}</a>`;
 }
 
@@ -38,14 +80,14 @@ function getAnchorAttributes(filePath, linkTitle) {
   let fileName = filePath.replaceAll("&amp;", "&");
   let header = "";
   let headerLinkPath = "";
-  if (filePath.includes("#")) {
-    [fileName, header] = filePath.split("#");
+  if (fileName.includes("#")) {
+    [fileName, header] = fileName.split("#");
     headerLinkPath = `#${headerToId(header)}`;
   }
 
   let noteIcon = process.env.NOTE_ICON_DEFAULT;
   const title = linkTitle ? linkTitle : fileName;
-  let permalink = `/notes/${slugify(filePath)}`;
+  let permalink = `/notes/${slugify(fileName)}`;
   let deadLink = false;
   try {
     const startPath = "./src/site/notes/";
@@ -56,7 +98,7 @@ function getAnchorAttributes(filePath, linkTitle) {
       fullPath = `${startPath}${fileName}.md`;
     }
     const file = fs.readFileSync(fullPath, "utf8");
-    const frontMatter = matter(file);
+    const frontMatter = matter(file, matterOptions);
     if (frontMatter.data.permalink) {
       permalink = frontMatter.data.permalink;
     }
@@ -96,10 +138,15 @@ function getAnchorAttributes(filePath, linkTitle) {
 
 const tagRegex = /(^|\s|\>)(#[^\s!@#$%^&*()=+\.,\[{\]};:'"?><]+)(?!([^<]*>))/g;
 
-module.exports = function (eleventyConfig) {
+const markdownFileTypeRegex = /\.(md|markdown)$/i;
+const isMarkdownPage = (inputPath) => inputPath && inputPath.match(markdownFileTypeRegex);
+
+module.exports = function(eleventyConfig) {
   eleventyConfig.setLiquidOptions({
     dynamicPartials: true,
   });
+
+  eleventyConfig.setFrontMatterParsingOptions(matterOptions);
   let markdownLib = markdownIt({
     breaks: true,
     html: true,
@@ -110,8 +157,8 @@ module.exports = function (eleventyConfig) {
     })
     .use(require("markdown-it-mark"))
     .use(require("markdown-it-footnote"))
-    .use(function (md) {
-      md.renderer.rules.hashtag_open = function (tokens, idx) {
+    .use(function(md) {
+      md.renderer.rules.hashtag_open = function(tokens, idx) {
         return '<a class="tag" onclick="toggleTagSearch(this)">';
       };
     })
@@ -122,6 +169,22 @@ module.exports = function (eleventyConfig) {
       options: {
         skipHtmlTags: { "[-]": ["pre"] },
       },
+    })
+    .use(function(md) {
+      // mathjax-full 3.2.2 throws on characters outside its operator
+      // dictionary (e.g. "€") — a stray $...€...$ span in prose would
+      // otherwise abort the entire build. Fall back to the raw text.
+      for (const rule of ["math_inline", "math_block"]) {
+        const original = md.renderer.rules[rule];
+        if (!original) continue;
+        md.renderer.rules[rule] = function(tokens, idx, options, env, self) {
+          try {
+            return original(tokens, idx, options, env, self);
+          } catch (e) {
+            return md.utils.escapeHtml(tokens[idx].content);
+          }
+        };
+      }
     })
     .use(require("markdown-it-attrs"))
     .use(require("markdown-it-task-checkbox"), {
@@ -137,11 +200,12 @@ module.exports = function (eleventyConfig) {
       closeMarker: "```",
     })
     .use(namedHeadingsFilter)
-    .use(function (md) {
+    .use(basesPlugin)
+    .use(function(md) {
       //https://github.com/DCsunset/markdown-it-mermaid-plugin
       const origFenceRule =
         md.renderer.rules.fence ||
-        function (tokens, idx, options, env, self) {
+        function(tokens, idx, options, env, self) {
           return self.renderToken(tokens, idx, options, env, self);
         };
       md.renderer.rules.fence = (tokens, idx, options, env, slf) => {
@@ -153,6 +217,26 @@ module.exports = function (eleventyConfig) {
         if (token.info === "transclusion") {
           const code = token.content.trim();
           return `<div class="transclusion">${md.render(code)}</div>`;
+        }
+        if (token.info === "gist") {
+          const code = token.content.trim();
+          // Support multiple gist references, one per line
+          const gistLines = code.split('\n').filter(line => line.trim());
+
+          const scripts = gistLines.map(line => {
+            line = line.trim();
+            // Parse format: [username/]gist-id[#filename]
+            const parts = line.split('#');
+            const gistPath = parts[0];
+            const filename = parts[1] || '';
+
+            // Build the GitHub Gist embed URL
+            const gistUrl = `https://gist.github.com/${gistPath}.js`;
+            const scriptUrl = filename ? `${gistUrl}?file=${encodeURIComponent(filename)}` : gistUrl;
+
+            return `<script src="${scriptUrl}"></script>`;
+          });
+          return scripts.join('\n');
         }
         if (token.info.startsWith("ad-")) {
           const code = token.content.trim();
@@ -212,7 +296,7 @@ module.exports = function (eleventyConfig) {
 
       const defaultImageRule =
         md.renderer.rules.image ||
-        function (tokens, idx, options, env, self) {
+        function(tokens, idx, options, env, self) {
           return self.renderToken(tokens, idx, options, env, self);
         };
       md.renderer.rules.image = (tokens, idx, options, env, self) => {
@@ -247,23 +331,59 @@ module.exports = function (eleventyConfig) {
 
       const defaultLinkRule =
         md.renderer.rules.link_open ||
-        function (tokens, idx, options, env, self) {
+        function(tokens, idx, options, env, self) {
           return self.renderToken(tokens, idx, options, env, self);
         };
-      md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
-        const aIndex = tokens[idx].attrIndex("target");
-        const classIndex = tokens[idx].attrIndex("class");
-
-        if (aIndex < 0) {
-          tokens[idx].attrPush(["target", "_blank"]);
-        } else {
-          tokens[idx].attrs[aIndex][1] = "_blank";
+      function isExternalHref(href) {
+        if (!href) return false;
+        const trimmed = href.trim();
+        if (
+          trimmed.startsWith("/") ||
+          trimmed.startsWith("#") ||
+          trimmed.startsWith("?") ||
+          trimmed.startsWith("./") ||
+          trimmed.startsWith("../")
+        ) {
+          return false;
         }
+        // Any explicit scheme (http, https, mailto, etc) is treated as external.
+        return /^[a-z][a-z0-9+.-]*:/i.test(trimmed);
+      }
 
-        if (classIndex < 0) {
-          tokens[idx].attrPush(["class", "external-link"]);
+      md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
+        const hrefIndex = tokens[idx].attrIndex("href");
+        const href =
+          hrefIndex >= 0 && tokens[idx].attrs && tokens[idx].attrs[hrefIndex]
+            ? tokens[idx].attrs[hrefIndex][1]
+            : "";
+        const isExternal = isExternalHref(href);
+
+        if (isExternal) {
+          const aIndex = tokens[idx].attrIndex("target");
+          const classIndex = tokens[idx].attrIndex("class");
+
+          if (aIndex < 0) {
+            tokens[idx].attrPush(["target", "_blank"]);
+          } else {
+            tokens[idx].attrs[aIndex][1] = "_blank";
+          }
+
+          if (classIndex < 0) {
+            tokens[idx].attrPush(["class", "external-link"]);
+          } else if (
+            !tokens[idx].attrs[classIndex][1].includes("external-link")
+          ) {
+            tokens[idx].attrs[classIndex][1] += " external-link";
+          }
         } else {
-          tokens[idx].attrs[classIndex][1] = "external-link";
+          const classIndex = tokens[idx].attrIndex("class");
+          if (classIndex < 0) {
+            tokens[idx].attrPush(["class", "internal-link"]);
+          } else if (
+            !tokens[idx].attrs[classIndex][1].includes("internal-link")
+          ) {
+            tokens[idx].attrs[classIndex][1] += " internal-link";
+          }
         }
 
         return defaultLinkRule(tokens, idx, options, env, self);
@@ -273,14 +393,14 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.setLibrary("md", markdownLib);
 
-  eleventyConfig.addFilter("isoDate", function (date) {
+  eleventyConfig.addFilter("isoDate", function(date) {
     return date && date.toISOString();
   });
 
-  eleventyConfig.addFilter("link", function (str) {
+  eleventyConfig.addFilter("link", function(str) {
     return (
       str &&
-      str.replace(/\[\[(.*?\|.*?)\]\]/g, function (match, p1) {
+      str.replace(/\[\[(.*?\|.*?)\]\]/g, function(match, p1) {
         //Check if it is an embedded excalidraw drawing or mathjax javascript
         if (p1.indexOf("],[") > -1 || p1.indexOf('"$"') > -1) {
           return match;
@@ -292,16 +412,57 @@ module.exports = function (eleventyConfig) {
     );
   });
 
-  eleventyConfig.addFilter("taggify", function (str) {
+  // Resolve markdown-style relative links to .md files (e.g. [X](../a/b.md))
+  // to their real permalinks. Obsidian resolves these in-app, but they reach
+  // the rendered HTML untouched, where trailing-slash page URLs make the
+  // browser resolve them one directory too deep.
+  // pageInputPath overrides this.page for contexts like the feed, where the
+  // rendered content belongs to a looped-over note rather than the current page.
+  eleventyConfig.addFilter("resolveMdLinks", function(str, pageInputPath) {
+    const inputPath = pageInputPath || (this.page && this.page.inputPath);
+    if (!str || !inputPath) {
+      return str;
+    }
+    const notesRoot = "src/site/notes/";
+    const normalizedInput = inputPath.replace(/^\.\//, "");
+    const rootIndex = normalizedInput.indexOf(notesRoot);
+    if (rootIndex === -1) {
+      return str;
+    }
+    const vaultFilePath = normalizedInput.slice(rootIndex + notesRoot.length);
+    const sourceDir = nodePath.posix.dirname(vaultFilePath);
+    return convertMdHrefs(str, sourceDir === "." ? "" : sourceDir, (candidates) => {
+      let firstAttempt = null;
+      for (const vaultPath of candidates) {
+        const { attributes } = getAnchorAttributes(vaultPath);
+        if (!attributes.class.includes("is-unresolved")) {
+          return attributes;
+        }
+        firstAttempt = firstAttempt || attributes;
+      }
+      // Unresolved targets keep getAnchorAttributes' /404 behavior, matching
+      // how dead wikilinks are handled.
+      return firstAttempt;
+    });
+  });
+
+  eleventyConfig.addFilter("taggify", function(str) {
     return (
       str &&
-      str.replace(tagRegex, function (match, precede, tag) {
+      str.replace(tagRegex, function(match, precede, tag) {
         return `${precede}<a class="tag" onclick="toggleTagSearch(this)" data-content="${tag}">${tag}</a>`;
       })
     );
   });
 
-  eleventyConfig.addFilter("searchableTags", function (str) {
+  eleventyConfig.addFilter("stripForSearch", function(content) {
+    return content
+      .replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  });
+
+  eleventyConfig.addFilter("searchableTags", function(str) {
     let tags;
     let match = str && str.match(tagRegex);
     if (match) {
@@ -318,21 +479,39 @@ module.exports = function (eleventyConfig) {
     }
   });
 
-  eleventyConfig.addFilter("hideDataview", function (str) {
+  eleventyConfig.addFilter("hideDataview", function(str) {
     return (
       str &&
-      str.replace(/\(\S+\:\:(.*)\)/g, function (_, value) {
+      str.replace(/\(\S+\:\:(.*)\)/g, function(_, value) {
         return value.trim();
       })
     );
   });
 
-  eleventyConfig.addTransform("dataview-js-links", function (str) {
+  eleventyConfig.addFilter("xmlSafe", function(str) {
+    if (!str) return str;
+    // Remove invalid XML characters (0xFFFE, 0xFFFF, etc.)
+    str = str.replace(/\uFFFE|\uFFFF/g, '');
+    // Escape ]]> in content to prevent CDATA issues
+    str = str.replace(/\]\]>/g, ']]&gt;');
+    // Self-close br, hr, and link tags
+    str = str.replace(/<br\s*>/gi, '<br />');
+    str = str.replace(/<hr\s*>/gi, '<hr />');
+    str = str.replace(/<link([^>]*?)(?<!\/)>/gi, '<link$1 />');
+    // Self-close img tags that aren't already self-closed
+    str = str.replace(/<img([^>]*?)(?<!\/)>/gi, '<img$1 />');
+    return str;
+  });
+
+  eleventyConfig.addTransform("dataview-js-links", function(str) {
+    if (!isMarkdownPage(this.page.inputPath)) {
+      return str;
+    }
     const parsed = parse(str);
     for (const dataViewJsLink of parsed.querySelectorAll("a[data-href].internal-link")) {
       const notePath = dataViewJsLink.getAttribute("data-href");
       const title = dataViewJsLink.innerHTML;
-      const {attributes, innerHTML} = getAnchorAttributes(notePath, title);
+      const { attributes, innerHTML } = getAnchorAttributes(notePath, title);
       for (const key in attributes) {
         dataViewJsLink.setAttribute(key, attributes[key]);
       }
@@ -362,14 +541,14 @@ module.exports = function (eleventyConfig) {
 
       content = content.replace(
         calloutMeta,
-        function (metaInfoMatch, callout, metaData, collapse, title) {
+        function(metaInfoMatch, callout, metaData, collapse, title) {
           isCollapsable = Boolean(collapse);
           isCollapsed = collapse === "-";
           const titleText = title.replace(/(<\/{0,1}\w+>)/, "")
             ? title
             : `${callout.charAt(0).toUpperCase()}${callout
-                .substring(1)
-                .toLowerCase()}`;
+              .substring(1)
+              .toLowerCase()}`;
           const fold = isCollapsable
             ? `<div class="callout-fold"><i icon-name="chevron-down"></i></div>`
             : ``;
@@ -397,7 +576,10 @@ module.exports = function (eleventyConfig) {
     }
   }
 
-  eleventyConfig.addTransform("callout-block", function (str) {
+  eleventyConfig.addTransform("callout-block", function(str) {
+    if (!isMarkdownPage(this.page.inputPath)) {
+      return str;
+    }
     const parsed = parse(str);
     transformCalloutBlockquotes(parsed.querySelectorAll("blockquote"));
     return str && parsed.innerHTML;
@@ -438,14 +620,26 @@ module.exports = function (eleventyConfig) {
   }
 
 
-  eleventyConfig.addTransform("picture", function (str) {
-    if(process.env.USE_FULL_RESOLUTION_IMAGES === "true"){
+  eleventyConfig.addTransform("picture", async function(str) {
+    if (!isMarkdownPage(this.page.inputPath)) {
+      return str;
+    }
+    if (process.env.USE_FULL_RESOLUTION_IMAGES === "true") {
       return str;
     }
     const parsed = parse(str);
     for (const imageTag of parsed.querySelectorAll(".cm-s-obsidian img")) {
       const src = imageTag.getAttribute("src");
       if (src && src.startsWith("/") && !src.endsWith(".svg")) {
+        // Files sharp can't decode (e.g. HEIC or a truncated AVIF renamed
+        // to .jpg) keep their original <img> tag instead of a <picture>
+        // pointing at optimized files that will never exist. This must be
+        // a real decode probe, not just a header check: feeding an
+        // undecodable file to eleventy-img fails the whole build via
+        // unhandled promise rejections in its internals.
+        if (!(await isDecodableImage("./src/site" + decodeURI(src)))) {
+          continue;
+        }
         const cls = imageTag.classList.value;
         const alt = imageTag.getAttribute("alt");
         const width = imageTag.getAttribute("width") || '';
@@ -469,7 +663,10 @@ module.exports = function (eleventyConfig) {
     return str && parsed.innerHTML;
   });
 
-  eleventyConfig.addTransform("table", function (str) {
+  eleventyConfig.addTransform("table", function(str) {
+    if (!isMarkdownPage(this.page.inputPath)) {
+      return str;
+    }
     const parsed = parse(str);
     for (const t of parsed.querySelectorAll(".cm-s-obsidian > table")) {
       let inner = t.innerHTML;
@@ -499,7 +696,7 @@ module.exports = function (eleventyConfig) {
   function convertCanvasLinks(str) {
     return (
       str &&
-      str.replace(/\[\[(.*?\|.*?)\]\]/g, function (match, p1) {
+      str.replace(/\[\[(.*?\|.*?)\]\]/g, function(match, p1) {
         if (p1.indexOf("],[") > -1 || p1.indexOf('"$"') > -1) {
           return match;
         }
@@ -513,14 +710,14 @@ module.exports = function (eleventyConfig) {
   function convertCanvasTags(str) {
     return (
       str &&
-      str.replace(tagRegex, function (match, precede, tag) {
+      str.replace(tagRegex, function(match, precede, tag) {
         return `${precede}<a class="tag" onclick="toggleTagSearch(this)" data-content="${tag}">${tag}</a>`;
       })
     );
   }
 
   // Render markdown in canvas text nodes at build time
-  eleventyConfig.addTransform("canvas-markdown", function (str) {
+  eleventyConfig.addTransform("canvas-markdown", function(str) {
     if (!str || !str.includes('data-markdown="')) {
       return str;
     }
@@ -561,11 +758,10 @@ module.exports = function (eleventyConfig) {
     }
   });
 
-  eleventyConfig.addTransform("htmlMinifier", async (content, outputPath) => {
+  eleventyConfig.addTransform("htmlMinifier", async function(content) {
     if (
       (process.env.NODE_ENV === "production" || process.env.ELEVENTY_ENV === "prod") &&
-      outputPath &&
-      outputPath.endsWith(".html")
+      (this.page.outputPath || "").endsWith(".html")
     ) {
       try {
         return await htmlMinifier.minify(content, {
@@ -586,10 +782,38 @@ module.exports = function (eleventyConfig) {
     return content;
   });
 
+  eleventyConfig.addTransform("jsonMinifier", async (content, outputPath) => {
+    if (
+      (process.env.NODE_ENV === "production" || process.env.ELEVENTY_ENV === "prod") &&
+      outputPath &&
+      outputPath.endsWith(".json")
+    ) {
+      try {
+        return JSON.stringify(JSON.parse(content));
+      } catch {
+        // If the JSON minifying fails for some reason due to malformed JSON, just return the content as is.
+        return content;
+      }
+    }
+    return content;
+  });
+
   eleventyConfig.addPassthroughCopy("src/site/img");
   eleventyConfig.addPassthroughCopy("src/site/scripts");
   eleventyConfig.addPassthroughCopy("src/site/styles/_theme.*.css");
   eleventyConfig.addPassthroughCopy({ "src/site/logo.*": "/" });
+  eleventyConfig.on("eleventy.before", () => {
+    normalizeFavicon(FAVICON_SOURCE, FAVICON_NORMALIZED);
+  });
+  eleventyConfig.on("eleventy.after", async () => {
+    if (pendingImageJobs.length > 0) {
+      console.log(`[image] Waiting for ${pendingImageJobs.length} image optimization jobs...`);
+      await Promise.all(pendingImageJobs);
+      console.log(`[image] Image optimization complete`);
+      pendingImageJobs.length = 0;
+    }
+  });
+  eleventyConfig.addWatchTarget(FAVICON_SOURCE);
   eleventyConfig.addPlugin(faviconsPlugin, { outputDir: "dist" });
   eleventyConfig.addPlugin(tocPlugin, {
     ul: true,
@@ -601,7 +825,7 @@ module.exports = function (eleventyConfig) {
     read: true,
     compile: async function(inputContent, inputPath) {
       // Extract content after frontmatter (canvas HTML is already compiled by plugin)
-      const parsed = matter(inputContent);
+      const parsed = matter(inputContent, matterOptions);
       return async (data) => {
         // Return the HTML content directly without markdown processing
         return parsed.content;
@@ -609,19 +833,23 @@ module.exports = function (eleventyConfig) {
     }
   });
 
-  eleventyConfig.addFilter("dateToZulu", function (date) {
+  eleventyConfig.addFilter("dateToZulu", function(date) {
     try {
       return new Date(date).toISOString("dd-MM-yyyyTHH:mm:ssZ");
     } catch {
       return "";
     }
   });
-  
-  eleventyConfig.addFilter("jsonify", function (variable) {
+
+  eleventyConfig.addFilter("jsonify", function(variable) {
     return JSON.stringify(variable) || '""';
   });
 
-  eleventyConfig.addFilter("validJson", function (variable) {
+  eleventyConfig.addFilter("notHidden", function (arr) {
+    return (arr || []).filter((item) => !item.data.hide);
+  });
+
+  eleventyConfig.addFilter("validJson", function(variable) {
     if (Array.isArray(variable)) {
       return variable.map((x) => x.replaceAll("\\", "\\\\")).join(",");
     } else if (typeof variable === "string") {
